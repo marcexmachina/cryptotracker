@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  HomeViewController.swift
 //  cryptotracker
 //
 //  Created by Marc O'Neill on 08/01/2018.
@@ -8,11 +8,9 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class HomeViewController: UIViewController {
 
   // MARK: - Private variables
-
-  private let marketDataClient: MarketDataClient = MarketDataClient()
 
   private var selectedInstrumentButton: UIButton {
     didSet {
@@ -21,8 +19,9 @@ class ViewController: UIViewController {
     }
   }
 
+  private let marketDataClient: MarketDataClient = MarketDataClient()
   private var notificationInfo: [String: Instrument] = [Constants.UserInfoKeys.instrument: .btc]
-
+  private var selectedInstrument: Instrument = .btc
 
 
   // MARK: - Outlets
@@ -41,6 +40,8 @@ class ViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+    let _ = Timer.scheduledTimer(timeInterval: 60, target: self, selector: #selector(timerRefresh), userInfo: nil, repeats: true)
+    NotificationCenter.default.addObserver(self, selector: #selector(refresh(notification:)), name: .tradesRefreshed, object: nil)
     NotificationCenter.default.post(name: .instrumentSelected, object: nil, userInfo: notificationInfo)
     tick(forInstrument: .btc)
   }
@@ -104,6 +105,7 @@ class ViewController: UIViewController {
 
   private func instrumentButtonSelected(forInstrument instrument: Instrument, button: UIButton) {
     selectedInstrumentButton = button
+    selectedInstrument = instrument
     tick(forInstrument: instrument)
     notificationInfo[Constants.UserInfoKeys.instrument] = instrument
     NotificationCenter.default.post(name: .instrumentSelected, object: nil, userInfo: notificationInfo)
@@ -118,6 +120,21 @@ class ViewController: UIViewController {
   private func deselectButton(button: UIButton) {
     let buttonColor = button.backgroundColor
     button.backgroundColor = buttonColor?.withAlphaComponent(0.0)
+  }
+
+  @objc private func refresh(notification: Notification) {
+    guard let notificationInfo = notification.userInfo as? [String: Instrument], let instrument = notificationInfo[Constants.UserInfoKeys.instrument] else {
+      print("Notification Error:: Incorrect UserInfo dictionary")
+      return
+    }
+
+    tick(forInstrument: instrument)
+  }
+
+  @objc private func timerRefresh() {
+    tick(forInstrument: selectedInstrument)
+    notificationInfo[Constants.UserInfoKeys.instrument] = selectedInstrument
+    NotificationCenter.default.post(name: .instrumentSelected, object: nil, userInfo: notificationInfo)
   }
 
 }

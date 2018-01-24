@@ -29,11 +29,7 @@ class MarketDataClient {
   // MARK: - Methods
 
 
-  ///
-  ///
-  /// - Parameters:
-  ///   - instrument: <#instrument description#>
-  ///   - completionHandler: <#completionHandler description#>
+
   func ticker(forInstrument instrument: Instrument, completionHandler: @escaping (Ticker?, Result) -> Void) {
     guard let url = URL(string: endpoint(forType: .tick, forInstrument: instrument)) else{
       print("ERROR:: Problem generating URL")
@@ -65,11 +61,7 @@ class MarketDataClient {
     }.resume()
   }
 
-  /// <#Description#>
-  ///
-  /// - Parameters:
-  ///   - instrument: <#instrument description#>
-  ///   - currency: <#currency description#>
+
   func trades(forInstrument instrument: Instrument, completionHandler: @escaping ([Trade]?, Result) -> Void) {
     guard let url = URL(string: endpoint(forType: .trades, forInstrument: instrument)) else {
       print("ERROR:: Problem generating URL")

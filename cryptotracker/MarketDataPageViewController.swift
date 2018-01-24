@@ -23,7 +23,7 @@ class MarketDataPageViewController: UIPageViewController, UIPageViewControllerDe
     var viewControllers = [UIViewController]()
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
     let pageOne = storyboard.instantiateViewController(withIdentifier: "graphpage")
-    let pageTwo = storyboard.instantiateViewController(withIdentifier: "tradespage") as! TradesTableViewController
+    let pageTwo = storyboard.instantiateViewController(withIdentifier: "tradespage")
     viewControllers.append(pageOne)
     viewControllers.append(pageTwo)
     return viewControllers
@@ -42,6 +42,7 @@ class MarketDataPageViewController: UIPageViewController, UIPageViewControllerDe
     delegate = self
     dataSource = self
     NotificationCenter.default.addObserver(self, selector: #selector(updateInstrument(notification:)), name: .instrumentSelected, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(refresh(notification:)), name: .tradesRefreshed, object: nil)
     setViewControllers([marketDataViewControllers[0]], direction: .reverse, animated: true, completion: nil)
   }
 
@@ -61,7 +62,11 @@ class MarketDataPageViewController: UIPageViewController, UIPageViewControllerDe
         return
       }
 
+      let graphViewController = self.marketDataViewControllers[Pages.graph.rawValue] as! GraphViewController
       let tradesViewController = self.marketDataViewControllers[Pages.trades.rawValue] as! TradesTableViewController
+      tradesViewController.instrument = instrument
+      tradesViewController.marketDataClient = marketDataClient
+      graphViewController.update(forTrades: trades)
       tradesViewController.update(forTrades: trades)
     }
   }
@@ -71,6 +76,15 @@ class MarketDataPageViewController: UIPageViewController, UIPageViewControllerDe
   // MARK: - Notification
 
   @objc private func updateInstrument(notification: NSNotification) {
+    guard let notificationInfo = notification.userInfo as? [String: Instrument], let instrument = notificationInfo[Constants.UserInfoKeys.instrument] else {
+      print("Notification Error:: Incorrect UserInfo dictionary")
+      return
+    }
+
+    trades(forInstrument: instrument)
+  }
+
+  @objc private func refresh(notification: NSNotification) {
     guard let notificationInfo = notification.userInfo as? [String: Instrument], let instrument = notificationInfo[Constants.UserInfoKeys.instrument] else {
       print("Notification Error:: Incorrect UserInfo dictionary")
       return

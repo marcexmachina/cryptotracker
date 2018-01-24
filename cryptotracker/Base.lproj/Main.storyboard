@@ -12,10 +12,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Home View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="cryptotracker" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="HomeViewController" customModule="cryptotracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -127,7 +127,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="0.70044948630136983" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.41176470588235292" blue="0.85098039215686272" alpha="0.80000000000000004" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="3w5-sq-y2E" firstAttribute="centerY" secondItem="beZ-bt-sf9" secondAttribute="centerY" id="1Fi-Ne-vTr"/>
@@ -189,16 +189,32 @@
             </objects>
             <point key="canvasLocation" x="1361" y="-431"/>
         </scene>
-        <!--View Controller-->
+        <!--Graph View Controller-->
         <scene sceneID="Dvb-2f-8si">
             <objects>
-                <viewController storyboardIdentifier="graphpage" id="O9I-Y9-Bxa" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="graphpage" id="O9I-Y9-Bxa" customClass="GraphViewController" customModule="cryptotracker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0a0-MH-gaJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hjw-tQ-FOr" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" red="0.23070234060287476" green="0.53693985939025879" blue="0.88359767198562622" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="m2L-ry-uDP" firstAttribute="trailing" secondItem="Hjw-tQ-FOr" secondAttribute="trailing" id="3Do-cJ-aOh"/>
+                            <constraint firstItem="m2L-ry-uDP" firstAttribute="bottom" secondItem="Hjw-tQ-FOr" secondAttribute="bottom" id="3aF-6Q-Cgg"/>
+                            <constraint firstItem="Hjw-tQ-FOr" firstAttribute="leading" secondItem="m2L-ry-uDP" secondAttribute="leading" id="HMJ-7t-Osp"/>
+                            <constraint firstItem="Hjw-tQ-FOr" firstAttribute="top" secondItem="m2L-ry-uDP" secondAttribute="top" id="Zs0-4y-R9e"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="m2L-ry-uDP"/>
                     </view>
+                    <connections>
+                        <outlet property="graphView" destination="Hjw-tQ-FOr" id="NSQ-aw-KQ8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7f3-Rf-oba" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

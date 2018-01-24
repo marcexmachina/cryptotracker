@@ -11,9 +11,16 @@ import UIKit
 
 class TradesTableViewController: UITableViewController {
 
-  // Mark: - Variables
+  // Mark: - Private properties
 
   private var trades: [Trade] = [Trade]()
+  private let refreshController = UIRefreshControl()
+
+
+  // MARK: - Properties
+  
+  var instrument: Instrument!
+  var marketDataClient: MarketDataClient!
 
 
 
@@ -22,6 +29,8 @@ class TradesTableViewController: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     tableView.register(UINib(nibName: "TradeCell", bundle: nil), forCellReuseIdentifier: "cell")
+    tableView.refreshControl = refreshController
+    refreshController.addTarget(self, action: #selector(refreshData), for: .valueChanged)
   }
 
 
@@ -33,6 +42,15 @@ class TradesTableViewController: UITableViewController {
     tableView.reloadData()
   }
 
+
+
+  // MARK: - Private methods
+
+  @objc private func refreshData() {
+    var notificationInfo: [String: Instrument] = [Constants.UserInfoKeys.instrument: instrument]
+    NotificationCenter.default.post(name: .tradesRefreshed, object: nil, userInfo: notificationInfo)
+    self.refreshControl?.endRefreshing()
+  }
 
 
   // MARK: - UITableViewDataSource
