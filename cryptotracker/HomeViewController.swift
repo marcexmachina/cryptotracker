@@ -134,7 +134,7 @@ class HomeViewController: UIViewController {
   @objc private func timerRefresh() {
     tick(forInstrument: selectedInstrument)
     notificationInfo[Constants.UserInfoKeys.instrument] = selectedInstrument
-    NotificationCenter.default.post(name: .instrumentSelected, object: nil, userInfo: notificationInfo)
+    NotificationCenter.default.post(name: .tradesRefreshed, object: nil, userInfo: notificationInfo)
   }
 
 }

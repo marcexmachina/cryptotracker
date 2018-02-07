@@ -50,7 +50,7 @@ class MarketDataPageViewController: UIPageViewController, UIPageViewControllerDe
 
   // MARK: - Private methods
 
-  private func trades(forInstrument instrument: Instrument) {
+  private func trades(forInstrument instrument: Instrument, animate: Bool) {
     guard let marketDataClient = marketDataClient else {
       print("MarketDataPageViewController:: MarketDataClient is nil")
       return
@@ -66,7 +66,7 @@ class MarketDataPageViewController: UIPageViewController, UIPageViewControllerDe
       let tradesViewController = self.marketDataViewControllers[Pages.trades.rawValue] as! TradesTableViewController
       tradesViewController.instrument = instrument
       tradesViewController.marketDataClient = marketDataClient
-      graphViewController.update(forTrades: trades)
+      graphViewController.update(forTrades: trades, animate: animate)
       tradesViewController.update(forTrades: trades)
     }
   }
@@ -81,7 +81,7 @@ class MarketDataPageViewController: UIPageViewController, UIPageViewControllerDe
       return
     }
 
-    trades(forInstrument: instrument)
+    trades(forInstrument: instrument, animate: true)
   }
 
   @objc private func refresh(notification: NSNotification) {
@@ -90,7 +90,7 @@ class MarketDataPageViewController: UIPageViewController, UIPageViewControllerDe
       return
     }
 
-    trades(forInstrument: instrument)
+    trades(forInstrument: instrument, animate: false)
   }
 
 
