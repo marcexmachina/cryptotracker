@@ -24,6 +24,7 @@ class HomeViewController: UIViewController {
   private var selectedInstrument: Instrument = .btc
 
 
+
   // MARK: - Outlets
 
   @IBOutlet weak var btcButton: UIButton!
@@ -65,6 +66,7 @@ class HomeViewController: UIViewController {
   }
 
 
+  
   // Mark: - Actions
 
   @IBAction func instrumentButtonPressed(sender: AnyObject) {
@@ -98,7 +100,7 @@ class HomeViewController: UIViewController {
         print("No ticker data for \(instrument.displayName())")
         return
       }
-      self.lastPriceLabel.text = "AUD\(tick.lastPrice)"
+      self.lastPriceLabel.text = tick.lastPrice.currencyDisplayString
       self.instrumentPriceLabel.text = "\(instrument.displayName()) price"
     }
   }

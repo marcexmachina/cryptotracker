@@ -11,7 +11,46 @@ import UIKit
 
 import Charts
 
-class GraphViewController: UIViewController, IValueFormatter {
+// Formatter for xAxis min/max labels
+class AxisFormatter: IndexAxisValueFormatter {
+
+  let trades: [Trade]
+  let maxPrice: Double
+  let minPrice: Double
+
+  override func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+    guard let _ = axis as? XAxis else { return "" }
+    let index = Int(value)
+    let trade = trades[index]
+    let prices = trades.map { $0.price }
+    let minIndex = prices.index(of: minPrice)
+    let maxIndex = prices.index(of: maxPrice)
+    if index == minIndex {
+      return axisString(price: trade.price.currencyDisplayString, time: trade.timeString, date: trade.dateString)
+    } else if index == maxIndex {
+      return axisString(price: trade.price.currencyDisplayString, time: trade.timeString, date: trade.dateString)
+    }
+    return ""
+  }
+
+  init(trades: [Trade], maxPrice: Double, minPrice: Double, xValues: [String]) {
+    self.trades = trades
+    self.maxPrice = maxPrice
+    self.minPrice = minPrice
+    super.init(values: xValues)
+  }
+
+  private func axisString(price: String, time: String, date: String) -> String {
+    return """
+    \(price)
+    \(time)
+    \(date)
+    """
+  }
+}
+
+// Class to display the price line graph
+class GraphViewController: UIViewController {
 
   // MARK: - Outlets
 
@@ -21,29 +60,16 @@ class GraphViewController: UIViewController, IValueFormatter {
 
   // MARK: - Private variables
 
-  /// 50 trades of the 500 returned from client
+  /* 25 trades of the last 500 returned from client.
+   Need to limit it to 25 as xAxis can only have a max of 25 possible labels,
+   so could end up not having a min/max label which isn't good.
+   Limitation of Charts library.
+  */
   private var trimmedTrades: [Trade] = [Trade]()
 
   private var maxPrice: Double = 0.00
 
   private var minPrice: Double = 0.00
-
-  private var numberFormatter: NumberFormatter {
-    let formatter = NumberFormatter()
-    formatter.numberStyle = .currency
-    formatter.currencyCode = "AUD"
-    formatter.currencyGroupingSeparator = ","
-    formatter.maximumFractionDigits = 2
-    formatter.minimumFractionDigits = 2
-    return formatter
-  }
-
-  private var dateFormatter: DateFormatter {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .short
-    return formatter
-  }
 
 
 
@@ -60,9 +86,9 @@ class GraphViewController: UIViewController, IValueFormatter {
 
   func update(forTrades trades: [Trade], animate: Bool = true) {
     trimmedTrades.removeAll()
-    let sortedTrades = trades.sorted { $0.date < $1.date }
+    let sortedTrades = trades.sorted { $0.timestamp < $1.timestamp }
     for (index, element) in sortedTrades.enumerated() {
-      if index % 10 == 0 {
+      if index % 20 == 0 {
         trimmedTrades.append(element)
       }
     }
@@ -87,23 +113,29 @@ class GraphViewController: UIViewController, IValueFormatter {
       lineChartEntries.append(entry)
     }
     let line = LineChartDataSet(values: lineChartEntries, label: nil)
-    line.valueFormatter = self
+    line.valueTextColor = .clear
     line.colors = [.white]
     line.drawCirclesEnabled = false
     line.mode = .cubicBezier
     let data = LineChartData()
     data.addDataSet(line)
     graphView.data = data
+    graphView.xAxis.valueFormatter = AxisFormatter(trades: trimmedTrades, maxPrice: maxPrice, minPrice: minPrice, xValues: [String]())
     graphView.notifyDataSetChanged()
     if animate {
       graphView.animate(xAxisDuration: 1.8, easingOption: .linear)
     }
+    graphView.fitScreen()
   }
 
+
+  /// Initial setup of the graph
   private func setup() {
+    graphView.xAxis.setLabelCount(25, force: true)
     graphView.drawGridBackgroundEnabled = false
     graphView.xAxis.drawAxisLineEnabled = true
     graphView.xAxis.labelPosition = .bottom
+    graphView.xAxis.avoidFirstLastClippingEnabled = true
     graphView.leftAxis.drawAxisLineEnabled = false
     graphView.rightAxis.drawAxisLineEnabled = false
     graphView.xAxis.drawGridLinesEnabled = false
@@ -112,37 +144,9 @@ class GraphViewController: UIViewController, IValueFormatter {
     graphView.isUserInteractionEnabled = false
     graphView.legend.form = .none
     graphView.chartDescription = nil
-    graphView.xAxis.drawLabelsEnabled = false
+    graphView.xAxis.drawLabelsEnabled = true
     graphView.leftAxis.drawLabelsEnabled = false
     graphView.rightAxis.drawLabelsEnabled = false
-  }
-
-  private func localDateTimeFromTimestamp(date: String) -> String {
-    print("DATE:: \(date)")
-    let dateFormatter = DateFormatter()
-    dateFormatter.timeStyle = .short
-    dateFormatter.dateStyle = .short
-    dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-
-    let date = dateFormatter.date(from: date)
-    dateFormatter.timeZone = TimeZone.current
-    dateFormatter.dateFormat = "h:mm a"
-
-    return dateFormatter.string(from: date!)
-  }
-
-
-  // MARK: - IValueFormatter
-
-  func stringForValue(_ value: Double, entry: ChartDataEntry, dataSetIndex: Int, viewPortHandler: ViewPortHandler?) -> String {
-    if value == minPrice || value == maxPrice {
-      let tradeDateInterval = trimmedTrades[Int(entry.x)].date
-      let tradeDate = Date(timeIntervalSince1970: tradeDateInterval)
-      let formattedTradeDate = localDateTimeFromTimestamp(date: dateFormatter.string(from: tradeDate))
-      let formattedPrice = numberFormatter.string(from: NSNumber(value: value)) ?? ""
-      return "\(formattedPrice) \(formattedTradeDate)"
-    }
-    return ""
   }
 
 }

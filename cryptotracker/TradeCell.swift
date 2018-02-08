@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+// Custom cell for recent trades in `UIPageViewController` on Home screen
 class TradeCell: UITableViewCell {
 
   // MARK: - Outlets
@@ -22,10 +23,11 @@ class TradeCell: UITableViewCell {
   // MARK: - Methods
 
   func configure(forTrade trade: Trade) {
-    dateLabel.text = timeString(date: trade.date)
+    dateLabel.text = timeString(date: trade.timestamp)
     amountLabel.text = "\(trade.amount)"
-    priceLabel.text = "$\(trade.price)"
+    priceLabel.text = "$\(trade.price.currencyDisplayString)"
   }
+
 
 
   // MARK: - Private Methods

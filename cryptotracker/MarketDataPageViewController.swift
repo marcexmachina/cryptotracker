@@ -9,11 +9,19 @@
 import Foundation
 import UIKit
 
+// UIPageViewController on home screen to display graph and recent trades
 class MarketDataPageViewController: UIPageViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource {
 
+
+  /// Enum to specify page of PageViewController
+  ///
+  /// - graph: graph page
+  /// - trades: most recent trades page
   private enum Pages: Int {
     case graph, trades
   }
+
+
 
   // MARK: - Private variables
 
@@ -143,7 +151,5 @@ class MarketDataPageViewController: UIPageViewController, UIPageViewControllerDe
   func presentationIndex(for pageViewController: UIPageViewController) -> Int {
     return index
   }
-
-
   
 }

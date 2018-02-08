@@ -8,6 +8,7 @@
 
 import Foundation
 
+// Contains constants to be used within the app
 struct Constants {
 
   struct SegueIdentifiers {

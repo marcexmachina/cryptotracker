@@ -20,6 +20,8 @@
 		983F85DD2002FAD60096D268 /* cryptotrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983F85DC2002FAD60096D268 /* cryptotrackerTests.swift */; };
 		983F85E82003049B0096D268 /* MarketDataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983F85E72003049B0096D268 /* MarketDataClient.swift */; };
 		983F85EA20031D7A0096D268 /* Ticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983F85E920031D7A0096D268 /* Ticker.swift */; };
+		9846EA92202C00640046318D /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9846EA91202C00640046318D /* Double+Extensions.swift */; };
+		9846EA96202C14D30046318D /* Instrument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9846EA95202C14D30046318D /* Instrument.swift */; };
 		984D150C20086B3B009B149F /* TradesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984D150B20086B3B009B149F /* TradesTableViewController.swift */; };
 		985C85D4200C1BB100661275 /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985C85D3200C1BB100661275 /* GraphViewController.swift */; };
 		98B0D31D2008578300509275 /* Notification+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B0D31C2008578300509275 /* Notification+Extensions.swift */; };
@@ -56,6 +58,8 @@
 		983F85DE2002FAD60096D268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		983F85E72003049B0096D268 /* MarketDataClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketDataClient.swift; sourceTree = "<group>"; };
 		983F85E920031D7A0096D268 /* Ticker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ticker.swift; sourceTree = "<group>"; };
+		9846EA91202C00640046318D /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
+		9846EA95202C14D30046318D /* Instrument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Instrument.swift; sourceTree = "<group>"; };
 		984D150B20086B3B009B149F /* TradesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradesTableViewController.swift; sourceTree = "<group>"; };
 		985C85D3200C1BB100661275 /* GraphViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
 		98B0D31C2008578300509275 /* Notification+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extensions.swift"; sourceTree = "<group>"; };
@@ -145,6 +149,8 @@
 				98091073200869050003A4E6 /* TradeCell.swift */,
 				984D150B20086B3B009B149F /* TradesTableViewController.swift */,
 				985C85D3200C1BB100661275 /* GraphViewController.swift */,
+				9846EA91202C00640046318D /* Double+Extensions.swift */,
+				9846EA95202C14D30046318D /* Instrument.swift */,
 			);
 			path = cryptotracker;
 			sourceTree = "<group>";
@@ -361,7 +367,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9846EA92202C00640046318D /* Double+Extensions.swift in Sources */,
 				9817F51E2006F0B700E3065E /* Trade.swift in Sources */,
+				9846EA96202C14D30046318D /* Instrument.swift in Sources */,
 				983F85CA2002FAD60096D268 /* HomeViewController.swift in Sources */,
 				983F85E82003049B0096D268 /* MarketDataClient.swift in Sources */,
 				98B0D31D2008578300509275 /* Notification+Extensions.swift in Sources */,

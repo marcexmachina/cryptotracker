@@ -8,16 +8,28 @@
 
 import Foundation
 
+/// Result of network request
+///
+/// - success: success
+/// - failure: failure
 enum Result: Error {
   case success
   case failure(message: String)
 }
 
+// Class to make HTTP requests to BTCMarkets.net API
 class MarketDataClient {
 
+  /// Enum to specify which endpoint from the client we want
+  ///
+  /// - tick: endpoint to retrieve ticker for an instrument
+  /// - orderbook: endpoint to retrieve orderbook for an instrument
+  /// - trades: enpdpoint to retrieve most recent trades for an instrument
   private enum EndpointType: String {
     case tick, orderbook, trades
   }
+
+
 
   // MARK: - Private methods
 
@@ -26,10 +38,14 @@ class MarketDataClient {
   }
 
 
+
   // MARK: - Methods
 
-
-
+  /// Retrieves the `Ticker` from BTCMarkets.net for a particular instrument
+  ///
+  /// - Parameters:
+  ///   - instrument: the `Instrument` to request `Ticker` for
+  ///   - completionHandler: completion handler
   func ticker(forInstrument instrument: Instrument, completionHandler: @escaping (Ticker?, Result) -> Void) {
     guard let url = URL(string: endpoint(forType: .tick, forInstrument: instrument)) else{
       print("ERROR:: Problem generating URL")
@@ -61,7 +77,11 @@ class MarketDataClient {
     }.resume()
   }
 
-
+  /// Retrieves the most recent trades from BTCMarkets.net for a particular instrument
+  ///
+  /// - Parameters:
+  ///   - instrument: the `Instrument` to request most recent trades from
+  ///   - completionHandler: completion handler
   func trades(forInstrument instrument: Instrument, completionHandler: @escaping ([Trade]?, Result) -> Void) {
     guard let url = URL(string: endpoint(forType: .trades, forInstrument: instrument)) else {
       print("ERROR:: Problem generating URL")
@@ -92,12 +112,11 @@ class MarketDataClient {
     }.resume()
   }
 
-
-  /// <#Description#>
+  /// Retrieves the orderbook from BTCMarkets.net for a particular instrument
   ///
   /// - Parameters:
-  ///   - instrument: <#instrument description#>
-  ///   - completionHandler: <#completionHandler description#>
+  ///   - instrument: the `Instrument` to request orderbook for
+  ///   - completionHandler: completion handler
   func orderbook(forInstrument instrument: Instrument, completionHandler: @escaping (Result) -> Void) {
     guard let url = URL(string: endpoint(forType: .orderbook, forInstrument: instrument)) else {
       print("ERROR:: Problem generating URL")
@@ -111,24 +130,11 @@ class MarketDataClient {
         return
       }
 
-      guard let data = data else {
+      guard let _ = data else {
         completionHandler(Result.failure(message: "Response is nil"))
         return
       }
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
 }

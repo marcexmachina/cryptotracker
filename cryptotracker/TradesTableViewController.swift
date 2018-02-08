@@ -9,12 +9,14 @@
 import Foundation
 import UIKit
 
+// `UITableViewController` which holds most recent trades on Home screen
 class TradesTableViewController: UITableViewController {
 
   // Mark: - Private properties
 
   private var trades: [Trade] = [Trade]()
   private let refreshController = UIRefreshControl()
+
 
 
   // MARK: - Properties
@@ -47,7 +49,7 @@ class TradesTableViewController: UITableViewController {
   // MARK: - Private methods
 
   @objc private func refreshData() {
-    var notificationInfo: [String: Instrument] = [Constants.UserInfoKeys.instrument: instrument]
+    let notificationInfo: [String: Instrument] = [Constants.UserInfoKeys.instrument: instrument]
     NotificationCenter.default.post(name: .tradesRefreshed, object: nil, userInfo: notificationInfo)
     self.refreshControl?.endRefreshing()
   }
