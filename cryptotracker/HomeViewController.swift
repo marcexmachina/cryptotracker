@@ -65,6 +65,10 @@ class HomeViewController: UIViewController {
     }
   }
 
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+
 
   
   // Mark: - Actions

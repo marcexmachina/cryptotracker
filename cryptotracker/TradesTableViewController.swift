@@ -32,6 +32,8 @@ class TradesTableViewController: UITableViewController {
     super.viewDidLoad()
     tableView.register(UINib(nibName: "TradeCell", bundle: nil), forCellReuseIdentifier: "cell")
     tableView.refreshControl = refreshController
+    tableView.backgroundColor = .clear
+//    tableView.backgroundColor.wi
     refreshController.addTarget(self, action: #selector(refreshData), for: .valueChanged)
   }
 
@@ -54,6 +56,7 @@ class TradesTableViewController: UITableViewController {
     self.refreshControl?.endRefreshing()
   }
 
+  
 
   // MARK: - UITableViewDataSource
 

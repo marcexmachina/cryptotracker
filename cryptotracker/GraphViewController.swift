@@ -23,12 +23,23 @@ class AxisFormatter: IndexAxisValueFormatter {
     let index = Int(value)
     let trade = trades[index]
     let prices = trades.map { $0.price }
+
     let minIndex = prices.index(of: minPrice)
     let maxIndex = prices.index(of: maxPrice)
     if index == minIndex {
-      return axisString(price: trade.price.currencyDisplayString, time: trade.timeString, date: trade.dateString)
+      return """
+      \n\(trade.timeString)
+      LOW
+      \(trade.price.currencyDisplayString)
+      """
     } else if index == maxIndex {
-      return axisString(price: trade.price.currencyDisplayString, time: trade.timeString, date: trade.dateString)
+      return """
+      \n\(trade.timeString)
+      HIGH
+      \(trade.price.currencyDisplayString)
+      """
+    } else if index % 5 == 0 {
+      return trade.timeString
     }
     return ""
   }
@@ -86,7 +97,7 @@ class GraphViewController: UIViewController {
 
   func update(forTrades trades: [Trade], animate: Bool = true) {
     trimmedTrades.removeAll()
-    let sortedTrades = trades.sorted { $0.timestamp < $1.timestamp }
+    let sortedTrades = trades.sorted { $0.date < $1.date }
     for (index, element) in sortedTrades.enumerated() {
       if index % 20 == 0 {
         trimmedTrades.append(element)
@@ -132,6 +143,9 @@ class GraphViewController: UIViewController {
   /// Initial setup of the graph
   private func setup() {
     graphView.xAxis.setLabelCount(25, force: true)
+    graphView.xAxis.labelFont = .preferredFont(forTextStyle: .footnote)
+    graphView.xAxis.labelFont = graphView.xAxis.labelFont.withSize(10)
+    graphView.xAxis.labelTextColor = .white
     graphView.drawGridBackgroundEnabled = false
     graphView.xAxis.drawAxisLineEnabled = true
     graphView.xAxis.labelPosition = .bottom
