@@ -26,6 +26,7 @@ class TradeCell: UITableViewCell {
     dateLabel.text = timeString(date: trade.date)
     amountLabel.text = "\(trade.amount)"
     priceLabel.text = "$\(trade.price.currencyDisplayString)"
+    backgroundColor = .clear
   }
 
 
