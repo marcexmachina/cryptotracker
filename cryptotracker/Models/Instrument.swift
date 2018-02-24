@@ -23,7 +23,7 @@ enum Instrument: String, Decodable {
   case ltc = "LTC"
   case xrp = "XRP"
 
-  func displayName() -> String {
+  func fullDisplayName() -> String {
     switch self {
     case .btc:
       return "Bitcoin"
@@ -37,4 +37,6 @@ enum Instrument: String, Decodable {
       return "Ripple"
     }
   }
+
+  static let allValues = [btc, bch, eth, ltc, xrp]
 }

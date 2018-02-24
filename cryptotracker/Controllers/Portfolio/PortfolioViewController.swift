@@ -7,12 +7,21 @@
 //
 
 import Foundation
+import CoreData
 
 class PortfolioViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
   // MARK: - Outlets
 
   @IBOutlet weak var collectionView: UICollectionView!
+
+  // MARK : - Private properties
+
+  private var coins: [Coin] = [] {
+    didSet {
+      collectionView.reloadData()
+    }
+  }
 
   // MARK: - Lifecycle
 
@@ -21,11 +30,38 @@ class PortfolioViewController: UIViewController, UICollectionViewDelegate, UICol
     collectionView.dataSource = self
     collectionView.register(UINib(nibName: "PortfolioCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "portfolioCell")
   }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+
+    fetchCoins()
+  }
+
+  // MARK: - Private methods
+
+  private func fetchCoins() {
+    guard let appDelegate =  UIApplication.shared.delegate as? AppDelegate else {
+      return
+    }
+
+    let managedContext = appDelegate.persistentContainer.viewContext
+
+    let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Coin")
+
+    do {
+      guard let coins = try managedContext.fetch(fetchRequest) as? [Coin] else {
+        return
+      }
+      self.coins = coins
+    } catch let error as NSError {
+      print("Could not fetch. \(error), \(error.userInfo)")
+    }
+  }
   
   // MARK: - UICollectionViewDelegate
 
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 2
+    return coins.count
   }
 
   // MARK: - UICollectionViewDataSource

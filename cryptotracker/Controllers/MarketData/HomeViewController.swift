@@ -101,11 +101,11 @@ class HomeViewController: UIViewController {
   private func tick(forInstrument instrument: Instrument) {
     marketDataClient.ticker(forInstrument: instrument) { (tick, result) in
       guard let tick = tick else {
-        print("No ticker data for \(instrument.displayName())")
+        print("No ticker data for \(instrument.fullDisplayName())")
         return
       }
       self.lastPriceLabel.text = tick.lastPrice.currencyDisplayString
-      self.instrumentPriceLabel.text = "\(instrument.displayName()) price"
+      self.instrumentPriceLabel.text = "\(instrument.fullDisplayName()) price"
     }
   }
 
