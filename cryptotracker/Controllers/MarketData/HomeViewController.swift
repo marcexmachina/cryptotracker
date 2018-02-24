@@ -119,8 +119,8 @@ class HomeViewController: UIViewController {
 
   private func selectButton(button: UIButton) {
     button.layer.cornerRadius = 6
-    let buttonColor = button.backgroundColor
-    button.backgroundColor = buttonColor?.withAlphaComponent(0.2)
+    let buttonColor = UIColor(red: 170/255, green: 170/255, blue: 170/255, alpha: 0.2)
+    button.backgroundColor = buttonColor
   }
 
   private func deselectButton(button: UIButton) {

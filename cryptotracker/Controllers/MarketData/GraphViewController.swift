@@ -125,7 +125,8 @@ class GraphViewController: UIViewController {
     }
     let line = LineChartDataSet(values: lineChartEntries, label: nil)
     line.valueTextColor = .clear
-    line.colors = [.white]
+    //let lineColor = UIColor(red: 42/255, green: 111/255, blue: 1, alpha: 1)
+    line.colors = [.clear]
     line.drawCirclesEnabled = false
     line.mode = .cubicBezier
     let data = LineChartData()
@@ -136,6 +137,14 @@ class GraphViewController: UIViewController {
     if animate {
       graphView.animate(xAxisDuration: 1.8, easingOption: .linear)
     }
+
+    let blueColor = UIColor(red: 27/255, green: 95/255, blue: 159/255, alpha: 1)
+    let gradientColors = [blueColor.cgColor, UIColor.white.cgColor] as CFArray // Colors of the gradient
+    let colorLocations:[CGFloat] = [1.0, 0.0] // Positioning of the gradient
+    let gradient = CGGradient.init(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: gradientColors, locations: colorLocations) // Gradient Object
+    line.fill = Fill.fillWithLinearGradient(gradient!, angle: 90.0) // Set the Gradient
+    line.drawFilledEnabled = true // Draw the Gradient
+
     graphView.fitScreen()
   }
 
@@ -145,7 +154,7 @@ class GraphViewController: UIViewController {
     graphView.xAxis.setLabelCount(25, force: true)
     graphView.xAxis.labelFont = .preferredFont(forTextStyle: .footnote)
     graphView.xAxis.labelFont = graphView.xAxis.labelFont.withSize(10)
-    graphView.xAxis.labelTextColor = .white
+    graphView.xAxis.labelTextColor = .darkGray
     graphView.drawGridBackgroundEnabled = false
     graphView.xAxis.drawAxisLineEnabled = true
     graphView.xAxis.labelPosition = .bottom
