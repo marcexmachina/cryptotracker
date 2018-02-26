@@ -10,15 +10,14 @@
 import Foundation
 import CoreData
 
-
 extension Coin {
 
-    @nonobjc public class func fetchRequest() -> NSFetchRequest<Coin> {
-        return NSFetchRequest<Coin>(entityName: "Coin")
-    }
+  @nonobjc public class func fetchRequest() -> NSFetchRequest<Coin> {
+    return NSFetchRequest<Coin>(entityName: "Coin")
+  }
 
-    @NSManaged public var amount: Double
-    @NSManaged public var type: String
+  @NSManaged public var amount: Double
+  @NSManaged public var type: String
 
   var instrument: Instrument {
     get {

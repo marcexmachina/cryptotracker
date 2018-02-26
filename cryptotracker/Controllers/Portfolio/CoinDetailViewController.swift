@@ -20,23 +20,26 @@ class CoinDetailViewController: UIViewController, UIPickerViewDataSource, UIPick
   // MARK: - Actions
 
   @IBAction func saveButtonPressed(_ sender: Any) {
-    guard let type = typeTextField.text,
+    guard let instrument = selectedInstrument,
       let amountText = amountTextField.text,
       amountText.count > 0,
-      let amount = Double(amountText),
-      type.count > 0 else {
-        // ALERT GOES HERE
+      let amount = Double(amountText) else {
+        //TODO: ALERT GOES HERE
         print("NOPE")
         return
     }
     do {
-      try saveCoin(amount: amount, type: type)
+      try saveCoin(amount: amount, type: instrument.rawValue)
     } catch let error as NSError {
       print("Could not save. \(error), \(error.userInfo)")
       // Another alert here
     }
     self.navigationController?.popViewController(animated: true)
   }
+
+  // MARK: - Private properties
+
+  private var selectedInstrument: Instrument?
 
   // MARK: - Lifecycle
 
@@ -95,7 +98,8 @@ class CoinDetailViewController: UIViewController, UIPickerViewDataSource, UIPick
   // MARK: - UIPickerViewDelegate
 
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-    typeTextField.text = Instrument.allValues[row].fullDisplayName()
+    selectedInstrument = Instrument.allValues[row]
+    typeTextField.text = selectedInstrument!.fullDisplayName()
   }
 
   // MARK: - UITextFieldDelegate

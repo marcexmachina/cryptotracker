@@ -70,8 +70,9 @@ class PortfolioViewController: UIViewController, UICollectionViewDelegate, UICol
     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "portfolioCell", for: indexPath) as? PortfolioCollectionViewCell else {
       return UICollectionViewCell()
     }
+    let coin = coins[indexPath.row]
     cell.backgroundColor = .clear
-    cell.configure()
+    cell.configure(with: coin)
     return cell
   }
 
