@@ -22,13 +22,25 @@ class AxisFormatter: IndexAxisValueFormatter {
     guard let _ = axis as? XAxis else { return "" }
     let index = Int(value)
     let trade = trades[index]
-    let prices = trades.map { $0.price }
-    let minIndex = prices.index(of: minPrice)
-    let maxIndex = prices.index(of: maxPrice)
-    if index == minIndex {
-      return axisString(price: trade.price.currencyDisplayString, time: trade.timeString, date: trade.dateString)
-    } else if index == maxIndex {
-      return axisString(price: trade.price.currencyDisplayString, time: trade.timeString, date: trade.dateString)
+//    let prices = trades.map { $0.price }
+
+//    let minIndex = prices.index(of: minPrice)
+//    let maxIndex = prices.index(of: maxPrice)
+//    if index == minIndex {
+//      return """
+//      \n\(trade.timeString)
+//      LOW
+//      \(trade.price.currencyDisplayString)
+//      """
+//    } else if index == maxIndex {
+//      return """
+//      \n\(trade.timeString)
+//      HIGH
+//      \(trade.price.currencyDisplayString)
+//      """
+//    } else
+    if index % 5 == 0 {
+      return trade.timeString
     }
     return ""
   }
@@ -86,7 +98,7 @@ class GraphViewController: UIViewController {
 
   func update(forTrades trades: [Trade], animate: Bool = true) {
     trimmedTrades.removeAll()
-    let sortedTrades = trades.sorted { $0.timestamp < $1.timestamp }
+    let sortedTrades = trades.sorted { $0.date < $1.date }
     for (index, element) in sortedTrades.enumerated() {
       if index % 20 == 0 {
         trimmedTrades.append(element)
@@ -114,7 +126,8 @@ class GraphViewController: UIViewController {
     }
     let line = LineChartDataSet(values: lineChartEntries, label: nil)
     line.valueTextColor = .clear
-    line.colors = [.white]
+    //let lineColor = UIColor(red: 42/255, green: 111/255, blue: 1, alpha: 1)
+    line.colors = [.clear]
     line.drawCirclesEnabled = false
     line.mode = .cubicBezier
     let data = LineChartData()
@@ -125,6 +138,14 @@ class GraphViewController: UIViewController {
     if animate {
       graphView.animate(xAxisDuration: 1.8, easingOption: .linear)
     }
+
+    let blueColor = UIColor(red: 27/255, green: 95/255, blue: 159/255, alpha: 1)
+    let gradientColors = [blueColor.cgColor, UIColor.white.cgColor] as CFArray // Colors of the gradient
+    let colorLocations:[CGFloat] = [1.0, 0.0] // Positioning of the gradient
+    let gradient = CGGradient.init(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: gradientColors, locations: colorLocations) // Gradient Object
+    line.fill = Fill.fillWithLinearGradient(gradient!, angle: 90.0) // Set the Gradient
+    line.drawFilledEnabled = true // Draw the Gradient
+
     graphView.fitScreen()
   }
 
@@ -132,6 +153,9 @@ class GraphViewController: UIViewController {
   /// Initial setup of the graph
   private func setup() {
     graphView.xAxis.setLabelCount(25, force: true)
+    graphView.xAxis.labelFont = .preferredFont(forTextStyle: .footnote)
+    graphView.xAxis.labelFont = graphView.xAxis.labelFont.withSize(10)
+    graphView.xAxis.labelTextColor = .darkGray
     graphView.drawGridBackgroundEnabled = false
     graphView.xAxis.drawAxisLineEnabled = true
     graphView.xAxis.labelPosition = .bottom

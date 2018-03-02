@@ -10,7 +10,9 @@ import Foundation
 import UIKit
 
 // `UITableViewController` which holds most recent trades on Home screen
-class TradesTableViewController: UITableViewController {
+class TradesTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
+  @IBOutlet weak var tableView: UITableView?
 
   // Mark: - Private properties
 
@@ -30,8 +32,11 @@ class TradesTableViewController: UITableViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    tableView.register(UINib(nibName: "TradeCell", bundle: nil), forCellReuseIdentifier: "cell")
-    tableView.refreshControl = refreshController
+    view.backgroundColor = .clear
+    tableView?.delegate = self
+    tableView?.dataSource = self
+    tableView?.register(UINib(nibName: "TradeCell", bundle: nil), forCellReuseIdentifier: "cell")
+    tableView?.refreshControl = refreshController
     refreshController.addTarget(self, action: #selector(refreshData), for: .valueChanged)
   }
 
@@ -41,7 +46,7 @@ class TradesTableViewController: UITableViewController {
 
   func update(forTrades trades: [Trade]) {
     self.trades = trades
-    tableView.reloadData()
+    tableView?.reloadData()
   }
 
 
@@ -51,13 +56,14 @@ class TradesTableViewController: UITableViewController {
   @objc private func refreshData() {
     let notificationInfo: [String: Instrument] = [Constants.UserInfoKeys.instrument: instrument]
     NotificationCenter.default.post(name: .tradesRefreshed, object: nil, userInfo: notificationInfo)
-    self.refreshControl?.endRefreshing()
+    tableView?.refreshControl?.endRefreshing()
   }
 
+  
 
   // MARK: - UITableViewDataSource
 
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+  func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! TradeCell
     let trade = trades[indexPath.row]
     cell.configure(forTrade: trade)
@@ -68,7 +74,11 @@ class TradesTableViewController: UITableViewController {
 
   // MARK: - UITableViewDelegate
 
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return trades.count
+  }
+
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return UITableViewAutomaticDimension
   }
 }

@@ -54,6 +54,10 @@ class MarketDataPageViewController: UIPageViewController, UIPageViewControllerDe
     setViewControllers([marketDataViewControllers[0]], direction: .reverse, animated: true, completion: nil)
   }
 
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
+
 
 
   // MARK: - Private methods

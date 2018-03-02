@@ -34,7 +34,9 @@ class HomeViewController: UIViewController {
   @IBOutlet weak var ltcButton: UIButton!
   @IBOutlet weak var lastPriceLabel: UILabel!
   @IBOutlet weak var instrumentPriceLabel: UILabel!
-
+  @IBOutlet weak var highDetailsLabel: UILabel!
+  @IBOutlet weak var lowDetailsLabel: UILabel!
+  
 
 
   // MARK: - Lifecycle
@@ -45,6 +47,7 @@ class HomeViewController: UIViewController {
     NotificationCenter.default.addObserver(self, selector: #selector(refresh(notification:)), name: .tradesRefreshed, object: nil)
     NotificationCenter.default.post(name: .instrumentSelected, object: nil, userInfo: notificationInfo)
     tick(forInstrument: .btc)
+    trades(forInstrument: .btc)
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -63,6 +66,10 @@ class HomeViewController: UIViewController {
         destinationVC.marketDataClient = marketDataClient
       }
     }
+  }
+
+  deinit {
+    NotificationCenter.default.removeObserver(self)
   }
 
 
@@ -97,11 +104,33 @@ class HomeViewController: UIViewController {
   private func tick(forInstrument instrument: Instrument) {
     marketDataClient.ticker(forInstrument: instrument) { (tick, result) in
       guard let tick = tick else {
-        print("No ticker data for \(instrument.displayName())")
+        print("No ticker data for \(instrument.fullDisplayName())")
         return
       }
       self.lastPriceLabel.text = tick.lastPrice.currencyDisplayString
-      self.instrumentPriceLabel.text = "\(instrument.displayName()) price"
+      self.instrumentPriceLabel.text = "\(instrument.fullDisplayName()) price"
+    }
+  }
+
+  private func trades(forInstrument instrument: Instrument) {
+    marketDataClient.trades(forInstrument: instrument) { (trades, result) in
+      guard let trades = trades else {
+        print("Error retrieving trades:: \(result.localizedDescription)")
+        return
+      }
+
+      let sortedTrades = trades.sorted { $0.date < $1.date }
+      var trimmedTrades = [Trade]()
+      for (index, element) in sortedTrades.enumerated() {
+        if index % 20 == 0 {
+          trimmedTrades.append(element)
+        }
+      }
+      guard let lowTrade = (trimmedTrades.sorted { $0.price < $1.price }).first,
+      let highTrade = (trimmedTrades.sorted { $0.price < $1.price }).last else { return }
+
+      self.highDetailsLabel.text = "\(highTrade.price.currencyDisplayString) - \(highTrade.timeString) - \(highTrade.dateString)"
+      self.lowDetailsLabel.text = "\(lowTrade.price.currencyDisplayString) - \(lowTrade.timeString) - \(lowTrade.dateString)"
     }
   }
 
@@ -109,14 +138,15 @@ class HomeViewController: UIViewController {
     selectedInstrumentButton = button
     selectedInstrument = instrument
     tick(forInstrument: instrument)
+    trades(forInstrument: instrument)
     notificationInfo[Constants.UserInfoKeys.instrument] = instrument
     NotificationCenter.default.post(name: .instrumentSelected, object: nil, userInfo: notificationInfo)
   }
 
   private func selectButton(button: UIButton) {
     button.layer.cornerRadius = 6
-    let buttonColor = button.backgroundColor
-    button.backgroundColor = buttonColor?.withAlphaComponent(0.2)
+    let buttonColor = UIColor(red: 170/255, green: 170/255, blue: 170/255, alpha: 0.2)
+    button.backgroundColor = buttonColor
   }
 
   private func deselectButton(button: UIButton) {
@@ -131,10 +161,12 @@ class HomeViewController: UIViewController {
     }
 
     tick(forInstrument: instrument)
+    trades(forInstrument: instrument)
   }
 
   @objc private func timerRefresh() {
     tick(forInstrument: selectedInstrument)
+    trades(forInstrument: selectedInstrument)
     notificationInfo[Constants.UserInfoKeys.instrument] = selectedInstrument
     NotificationCenter.default.post(name: .tradesRefreshed, object: nil, userInfo: notificationInfo)
   }

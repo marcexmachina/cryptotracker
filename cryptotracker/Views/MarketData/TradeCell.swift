@@ -23,9 +23,10 @@ class TradeCell: UITableViewCell {
   // MARK: - Methods
 
   func configure(forTrade trade: Trade) {
-    dateLabel.text = timeString(date: trade.timestamp)
+    dateLabel.text = timeString(date: trade.date)
     amountLabel.text = "\(trade.amount)"
     priceLabel.text = "$\(trade.price.currencyDisplayString)"
+    backgroundColor = .clear
   }
 
 

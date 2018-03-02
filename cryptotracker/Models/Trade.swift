@@ -13,12 +13,12 @@ struct Trade: Decodable {
   let tid: Double
   let amount: Double
   let price: Double
-  let timestamp: Double
+  let date: Double
 
 
   //TODO: - Move this to somewhere more appropriate
   var dateString: String {
-    let utcDate = Date(timeIntervalSince1970: timestamp)
+    let utcDate = Date(timeIntervalSince1970: date)
     let dateFormatter = DateFormatter()
     dateFormatter.dateStyle = DateFormatter.Style.short
     dateFormatter.timeZone = TimeZone.current
@@ -27,7 +27,7 @@ struct Trade: Decodable {
   }
 
   var timeString: String {
-    let utcDate = Date(timeIntervalSince1970: timestamp)
+    let utcDate = Date(timeIntervalSince1970: date)
     let dateFormatter = DateFormatter()
     dateFormatter.timeStyle = DateFormatter.Style.short
     dateFormatter.timeZone = TimeZone.current
