@@ -22,23 +22,24 @@ class AxisFormatter: IndexAxisValueFormatter {
     guard let _ = axis as? XAxis else { return "" }
     let index = Int(value)
     let trade = trades[index]
-    let prices = trades.map { $0.price }
+//    let prices = trades.map { $0.price }
 
-    let minIndex = prices.index(of: minPrice)
-    let maxIndex = prices.index(of: maxPrice)
-    if index == minIndex {
-      return """
-      \n\(trade.timeString)
-      LOW
-      \(trade.price.currencyDisplayString)
-      """
-    } else if index == maxIndex {
-      return """
-      \n\(trade.timeString)
-      HIGH
-      \(trade.price.currencyDisplayString)
-      """
-    } else if index % 5 == 0 {
+//    let minIndex = prices.index(of: minPrice)
+//    let maxIndex = prices.index(of: maxPrice)
+//    if index == minIndex {
+//      return """
+//      \n\(trade.timeString)
+//      LOW
+//      \(trade.price.currencyDisplayString)
+//      """
+//    } else if index == maxIndex {
+//      return """
+//      \n\(trade.timeString)
+//      HIGH
+//      \(trade.price.currencyDisplayString)
+//      """
+//    } else
+    if index % 5 == 0 {
       return trade.timeString
     }
     return ""

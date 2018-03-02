@@ -26,7 +26,7 @@
                                     <constraint firstAttribute="width" constant="38" id="oyq-JE-jDp"/>
                                 </constraints>
                                 <state key="normal" title="XRP">
-                                    <color key="titleColor" red="0.14922000632777779" green="0.51708585019999997" blue="0.88724641665277781" alpha="0.85453232020547942" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" red="0.0039215686269999999" green="0.3803921569" blue="0.92549019610000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="instrumentButtonPressedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xYO-pS-506"/>
@@ -45,7 +45,7 @@
                                     <constraint firstAttribute="width" constant="38" id="EPM-cd-ZXA"/>
                                 </constraints>
                                 <state key="normal" title="ETH">
-                                    <color key="titleColor" red="0.14922000632777779" green="0.51708585019999997" blue="0.88724641665277781" alpha="0.85453232020547942" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" red="0.0039215686269999999" green="0.3803921569" blue="0.92549019610000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="instrumentButtonPressedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TF3-0r-P0J"/>
@@ -57,7 +57,7 @@
                                     <constraint firstAttribute="width" constant="38" id="1og-5e-2Jq"/>
                                 </constraints>
                                 <state key="normal" title="LTC">
-                                    <color key="titleColor" red="0.14922000632777779" green="0.51708585019999997" blue="0.88724641665277781" alpha="0.85453232020547942" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" red="0.0039215686269999999" green="0.3803921569" blue="0.92549019610000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="instrumentButtonPressedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Nwr-FG-dEr"/>
@@ -69,7 +69,7 @@
                                     <constraint firstAttribute="width" constant="38" id="XRe-EY-bEM"/>
                                 </constraints>
                                 <state key="normal" title="BCH">
-                                    <color key="titleColor" red="0.14922000632777779" green="0.51708585019999997" blue="0.88724641665277781" alpha="0.85453232020547942" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" red="0.0039215686269999999" green="0.3803921569" blue="0.92549019610000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="instrumentButtonPressedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="mep-lw-9bg"/>
@@ -81,7 +81,7 @@
                                     <constraint firstAttribute="width" constant="38" id="P5Z-gl-utr"/>
                                 </constraints>
                                 <state key="normal" title="BTC">
-                                    <color key="titleColor" red="0.14922000632777779" green="0.51708585019999997" blue="0.88724641665277781" alpha="0.85453232020547942" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" red="0.0039215686269999999" green="0.3803921569" blue="0.92549019610000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="instrumentButtonPressedWithSender:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MPf-EX-KJu"/>
@@ -91,36 +91,36 @@
                                 <rect key="frame" x="307" y="50.5" width="68" height="1"/>
                                 <color key="backgroundColor" red="0.79607843137254897" green="0.79527550633183597" blue="0.79527550633183597" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AUD21999.99" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="tF1-i5-46P">
-                                <rect key="frame" x="133" y="74" width="109" height="27.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AUD21999.99" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tF1-i5-46P">
+                                <rect key="frame" x="133" y="74" width="109" height="20.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="109" id="mRE-fm-nNC"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
-                                <color key="textColor" red="0.14922000630000001" green="0.51708585019999997" blue="0.88724641670000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0039215686269999999" green="0.3803921569" blue="0.92549019610000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O3A-Tv-gov">
-                                <rect key="frame" x="0.0" y="165" width="375" height="333.5"/>
+                                <rect key="frame" x="0.0" y="158" width="375" height="333.5"/>
                                 <connections>
                                     <segue destination="yEn-5Y-yn6" kind="embed" identifier="marketDataContainerSegue" id="Sbw-j9-b5Z"/>
                                 </connections>
                             </containerView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6sD-Wm-Ifc" userLabel="Bottom divider">
-                                <rect key="frame" x="16" y="138.5" width="343" height="1"/>
+                                <rect key="frame" x="16" y="131.5" width="343" height="1"/>
                                 <color key="backgroundColor" red="0.79607843137254897" green="0.79527550633183597" blue="0.79527550633183597" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="AAz-hb-seh"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ethereum price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MFb-Z4-NUw">
-                                <rect key="frame" x="147" y="109" width="80" height="13.5"/>
+                                <rect key="frame" x="147" y="102" width="80" height="13.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" white="0.29570855034722221" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="High:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6pT-El-9zy">
-                                <rect key="frame" x="16" y="530.5" width="41" height="21"/>
+                                <rect key="frame" x="16" y="523.5" width="41" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -131,14 +131,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="High price details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJN-43-YMo">
-                                <rect key="frame" x="73" y="531" width="286" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJN-43-YMo">
+                                <rect key="frame" x="73" y="534.5" width="286" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Low price details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CZb-Gv-NLB">
-                                <rect key="frame" x="73" y="565" width="286" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CZb-Gv-NLB">
+                                <rect key="frame" x="73" y="575.5" width="286" height="0.0"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -197,8 +197,10 @@
                         <outlet property="bchButton" destination="63R-R4-HGf" id="92H-pg-2Xe"/>
                         <outlet property="btcButton" destination="beZ-bt-sf9" id="2Td-h1-hlE"/>
                         <outlet property="ethButton" destination="4hO-7c-90T" id="dWK-hG-lnf"/>
+                        <outlet property="highDetailsLabel" destination="lJN-43-YMo" id="srL-cu-juv"/>
                         <outlet property="instrumentPriceLabel" destination="MFb-Z4-NUw" id="FJL-qe-sUc"/>
                         <outlet property="lastPriceLabel" destination="tF1-i5-46P" id="OV4-Ht-dtj"/>
+                        <outlet property="lowDetailsLabel" destination="CZb-Gv-NLB" id="JWE-NV-Grf"/>
                         <outlet property="ltcButton" destination="Pr5-2P-AY6" id="MKY-ME-dvc"/>
                         <outlet property="xrpButton" destination="3w5-sq-y2E" id="gLz-ZR-q79"/>
                     </connections>
